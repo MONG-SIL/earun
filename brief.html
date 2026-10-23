@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <title>이어런 서비스 소개</title>
+    <style>
+      @page { size: A4; margin: 13mm 14mm 12mm; }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        font-family: "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+        color: #1b1914;
+        background: white;
+        letter-spacing: -0.03em;
+        word-break: keep-all;
+      }
+      h1, h2, h3 { font-family: "AppleMyungjo", "Nanum Myeongjo", serif; font-weight: 800; letter-spacing: -0.045em; margin: 0; }
+      p { margin: 0; }
+      .sheet { break-after: page; page-break-after: always; }
+      .sheet:last-child { break-after: auto; page-break-after: auto; }
+      .kicker { color: #e23b16; font-size: 11px; font-weight: 700; margin: 0 0 6px; }
+      .brand { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; }
+      .brand b { font-size: 18px; }
+      .brand span { color: #6d655c; font-size: 12px; }
+      h1 { font-size: 34px; line-height: 1.28; }
+      .lede { margin-top: 10px; font-size: 13.5px; line-height: 1.65; color: #3c3832; }
+      h2 { font-size: 20px; margin: 16px 0 8px; }
+      h3 { font-size: 14px; margin: 0 0 4px; }
+      .cards, .cols, .flow { display: grid; gap: 8px; }
+      .cards { grid-template-columns: 1fr 1fr 1fr; margin-top: 12px; }
+      .card, .link, .row, .cell {
+        border: 1px solid #e4dacd;
+        background: #fffdf9;
+        border-radius: 12px;
+        padding: 10px 12px;
+      }
+      .card p, .row p, .cell p { font-size: 11.5px; line-height: 1.5; color: #4d473f; }
+      .link {
+        margin-top: 14px;
+        background: #1c4639;
+        color: #f4efe6;
+        border: 0;
+        padding: 14px 16px;
+      }
+      .link small { display: block; opacity: 0.75; font-size: 11px; margin-bottom: 4px; }
+      .link strong { font-size: 16px; font-weight: 700; }
+      .cols { grid-template-columns: 1fr 1fr 1fr; }
+      .num { color: #e23b16; font-size: 12px; font-weight: 800; }
+      .list { display: flex; flex-direction: column; gap: 6px; }
+      .row { display: grid; grid-template-columns: 108px 1fr; gap: 10px; align-items: start; }
+      .flow { grid-template-columns: repeat(4, 1fr); }
+      .flow b { display: block; font-size: 12px; margin-bottom: 3px; }
+      .flow p { font-size: 11px; line-height: 1.45; color: #4d473f; }
+      table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 6px; }
+      th, td { border-bottom: 1px solid #e4dacd; text-align: left; vertical-align: top; padding: 6px 6px 6px 0; line-height: 1.45; }
+      th { color: #6d655c; font-weight: 700; font-size: 10.5px; }
+      td:first-child { width: 78px; font-weight: 700; }
+      .note { margin-top: 10px; font-size: 11.5px; line-height: 1.55; color: #3c3832; }
+      .foot { margin-top: 12px; font-size: 10.5px; color: #6d655c; }
+    </style>
+  </head>
+  <body>
+    <section class="sheet">
+      <div class="brand"><b>이어런</b><span>개인 맞춤형 AI 오디오 학습 플랫폼 · 서비스 소개</span></div>
+      <p class="kicker">컨셉</p>
+      <h1>읽어야 할 것을,<br>들을 수 있는 하루로.</h1>
+      <p class="lede">사용자가 읽어야 하는 콘텐츠를 듣기 좋은 말로 다시 구성해, 출퇴근·통학·운동처럼 귀가 자유로운 시간을 학습으로 바꿉니다. 관심 뉴스와 영어, 직접 가진 PDF와 노트를 라디오·대화·강의·암기 오디오로 공급하는 웹 서비스입니다.</p>
+      <h2>왜 필요한가</h2>
+      <div class="cards">
+        <article class="card"><h3>시간은 조각나 있다</h3><p>뉴스, 영어, 시험 자료는 쌓이는데 앉아서 읽을 시간은 짧습니다. 반면 귀가 비는 이동 시간은 충분히 쓰이지 않습니다.</p></article>
+        <article class="card"><h3>학습이 숙제처럼 느껴진다</h3><p>기존 학습 앱은 열어 문제를 풀어야 시작됩니다. 오늘 들을 내용을 알아서 준비해 주는 루틴이 드뭅니다.</p></article>
+        <article class="card"><h3>자료가 글에만 머문다</h3><p>PDF와 노트를 눈으로 반복하는 공부가 많습니다. 같은 자료를 자연스러운 말로 반복 청취할 자리가 없습니다.</p></article>
+      </div>
+      <h2>서비스가 하려는 일</h2>
+      <p class="lede">화면을 보지 않아도 흐름이 이어지게 만들고, 끝난 뒤에는 스크립트와 출처를 카드로 남겨 눈으로 다시 확인하게 합니다. 학습의 시작을 ‘앱을 여는 숙제’가 아니라 ‘오늘 들을 것이 준비된 시간’으로 바꿉니다.</p>
+      <div class="link">
+        <small>서비스 링크</small>
+        <strong>https://mong-sil.github.io/earun/</strong>
+      </div>
+    </section>
+
+    <section class="sheet">
+      <div class="brand"><b>이어런</b><span>해결 방식과 기능</span></div>
+      <h2>해결 방식</h2>
+      <div class="cols">
+        <article class="card"><h3>자투리 시간을 학습으로</h3><p>정한 시각에 오늘의 오디오를 안내합니다. 재생은 버튼 한 번으로 시작해, 이동 중 루틴이 됩니다.</p></article>
+        <article class="card"><h3>자료를 말로 재구성</h3><p>단순 낭독이 아니라 라디오, 대화, 강의, 암기 중 고른 말투로 장면을 나눕니다.</p></article>
+        <article class="card"><h3>상황별로 다르게</h3><p>시험, 통학, 영어, 뉴스 목적과 초·중·고급, 5·10·20분 목표에 맞춰 같은 자료도 다르게 읽습니다.</p></article>
+      </div>
+      <h2>핵심 기능</h2>
+      <div class="list">
+        <article class="row"><span class="num">01</span><p><b>상황 기반 오디오.</b> 관심사를 고르면 설명과 이미지를 모아 오고, 노트·PDF를 올리면 그 문장을 학습용 말로 다시 배열합니다.</p></article>
+        <article class="row"><span class="num">02</span><p><b>루틴 안내.</b> 매일 정한 시각부터 40분 사이에 오늘의 듣기를 알려 줍니다. 알림을 허용하면 브라우저 알림도 함께 옵니다.</p></article>
+        <article class="row"><span class="num">03</span><p><b>스크립트와 출처.</b> 재생 중인 문장이 표시되고, 원문과 나란히 볼 수 있습니다. 위키백과 문서는 링크와 CC BY-SA 표시를 붙입니다.</p></article>
+        <article class="row"><span class="num">04</span><p><b>카드형 기록.</b> 날짜, 스크립트, 출처, 들은 정도가 이 기기에 남아 다시 듣습니다.</p></article>
+        <article class="row"><span class="num">05</span><p><b>다시 만들기.</b> 더 쉽게, 시험 핵심만, 대화로, 암기 반복, 예시 추가, 더 길게. 방향을 바꾸면 새 카드가 생깁니다.</p></article>
+      </div>
+      <h2>쓰는 순서</h2>
+      <div class="flow">
+        <article class="card"><b>1. 고르기</b><p>관심사, 주제, 또는 내 노트와 PDF</p></article>
+        <article class="card"><b>2. 맞추기</b><p>목적, 말투, 난이도, 분량</p></article>
+        <article class="card"><b>3. 듣기</b><p>음성, 하이라이트, 원문 비교</p></article>
+        <article class="card"><b>4. 남기기</b><p>카드 보관과 다음 날 루틴</p></article>
+      </div>
+    </section>
+
+    <section class="sheet">
+      <div class="brand"><b>이어런</b><span>배포본과 차별점</span></div>
+      <h2>이 링크에서 바로 되는 것</h2>
+      <p class="lede">공개된 주소의 MVP는 설치 없이 브라우저에서 동작합니다. 관심사에 맞는 한국어 위키백과 문서와 이미지를 직접 가져오고, 목적과 말투에 맞춰 스크립트를 만든 뒤 기기의 한국어·영어 음성으로 읽습니다. 노트와 PDF는 서버로 전송하지 않고 브라우저 안에서만 문장을 뽑습니다. 기록과 루틴 시간도 그 기기에 저장됩니다.</p>
+      <p class="note">분량은 5·10·20분을 목표로 원고 길이를 조절하며, 화면에 실제 예상 길이를 함께 보여 줍니다. 브라우저가 소리의 자동 재생을 막기 때문에, 루틴 시간에는 재생 화면을 열고 버튼으로 듣기를 시작합니다.</p>
+      <h2>기존 도구와 다른 점</h2>
+      <table>
+        <thead><tr><th>구분</th><th>NotebookLM, Duolingo 등</th><th>이어런</th></tr></thead>
+        <tbody>
+          <tr><td>수집</td><td>매번 문서를 찾아 올리는 일이 많습니다.</td><td>관심사만 골라도 설명과 이미지를 모아 옵니다. 내 자료도 넣을 수 있습니다.</td></tr>
+          <tr><td>루틴</td><td>필요할 때 찾아가 실행하는 도구에 가깝습니다.</td><td>알림, 재생, 카드 기록이 하나의 듣기 루틴입니다.</td></tr>
+          <tr><td>말투</td><td>요약이나 한 가지 대화 형태가 중심입니다.</td><td>시험, 이동, 영어, 뉴스에 맞춰 라디오·대화·강의·암기로 바꿉니다.</td></tr>
+          <tr><td>수정</td><td>만든 오디오를 방향으로 고치기 어렵습니다.</td><td>더 쉽게, 핵심만, 더 길게처럼 다시 만들 수 있습니다.</td></tr>
+          <tr><td>학습</td><td>한국어 학습 루틴과 출처 확인이 약합니다.</td><td>한국어 음성, 스크립트, 출처, 복습 카드를 기본으로 둡니다.</td></tr>
+        </tbody>
+      </table>
+      <h2>의도</h2>
+      <p class="note">이어런의 목표는 더 많은 콘텐츠를 쌓는 것이 아니라, 이미 읽어야 하는 것을 놓치지 않게 하는 것입니다. 듣는 동안에는 화면에서 손을 떼도 되고, 이해가 필요한 문장만 카드와 출처로 돌아오면 됩니다. 생성 모델과 신경망 음성은 같은 스크립트 단계에 나중에 연결할 수 있게 수집, 재구성, 재생, 기록을 나누어 두었습니다. 지금은 개인 자료를 외부 모델에 보내지 않는 쪽을 먼저 택했습니다.</p>
+      <div class="link"><small>서비스 링크</small><strong>https://mong-sil.github.io/earun/</strong></div>
+      <p class="foot">위키백과 원문은 CC BY-SA 4.0입니다. 이어런은 학습을 위해 문장 순서와 말투를 다시 배열하고 출처를 남깁니다.</p>
+    </section>
+  </body>
+</html>
