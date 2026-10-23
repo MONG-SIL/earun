@@ -13,14 +13,14 @@ import {
   seoulKey,
   seoulLabel,
   streakFrom,
-} from "./content.js";
+} from "./content.js?v=4";
 import { extractPdf } from "./pdftext.js";
 import { clearStore, load, persist } from "./store.js";
 import { gatherSources } from "./wiki.js";
 
 const VIEWS = ["welcome", "setup", "today", "player", "create", "archive", "me"];
 const TITLES = {
-  welcome: "이어런 — 자투리 시간을 학습으로",
+  welcome: "이어런 — 출근길에 듣는 학습",
   setup: "루틴 만들기 — 이어런",
   today: "오늘 — 이어런",
   player: "듣기 — 이어런",
@@ -50,7 +50,7 @@ const state = {
   compare: false,
   loading: false,
   error: "",
-  voiceLabel: "기기의 음성",
+  voiceLabel: "한국어 음성",
   notifiedOn: "",
 };
 
@@ -168,7 +168,7 @@ function shell(bare) {
   return `<div class="app ${bare ? "is-bare" : ""}">
     ${bare ? "" : sideHtml()}
     <main class="main" id="main">
-      ${bare ? `<div class="topbar">${brand(false)}<a href="./earun-brief.pdf">소개 PDF</a></div>` : ""}
+      ${bare ? `<div class="topbar">${brand(false)}</div>` : ""}
       ${viewHtml()}
     </main>
     ${bare ? "" : tabHtml()}
@@ -231,34 +231,52 @@ function viewHtml() {
 }
 
 function viewWelcome() {
-  return `<section class="hero">
-    <p class="eyebrow">개인 맞춤형 AI 오디오 학습</p>
-    <h1>읽어야 할 것을,<br>들을 수 있는 하루로.</h1>
-    <p class="lede">관심사와 내 노트를 라디오, 대화, 강의, 암기 오디오로 바꿉니다. 재생 옆에는 스크립트와 출처, 이미지가 함께 남습니다.</p>
-    <div class="cta">
-      <button type="button" class="btn primary" data-action="start-guest">오늘의 오디오 들어보기</button>
-      <button type="button" class="btn ghost" data-action="start-setup">내 루틴 만들기</button>
+  return `<section class="stage">
+    <div class="hero">
+      <p class="eyebrow">출퇴근에 듣는 학습</p>
+      <h1>오늘 읽을 것,<br>출근길에 듣게.</h1>
+      <p class="lede">관심사나 내 노트를 5분 라디오, 강의, 영어 대화로 바꿉니다. 듣는 동안 스크립트와 출처가 옆에 남습니다.</p>
+      <div class="cta">
+        <button type="button" class="btn primary" data-action="start-guest" data-preset="preview">5분 미리 듣기</button>
+        <button type="button" class="btn ghost" data-action="start-note">내 노트로 만들기</button>
+      </div>
+      <div class="scenarios" role="group" aria-label="상황 선택">
+        <button type="button" data-action="start-guest" data-preset="commute">출근 10분</button>
+        <button type="button" data-action="start-guest" data-preset="exam">시험 전 5분</button>
+        <button type="button" data-action="start-guest" data-preset="english">영어 표현</button>
+      </div>
+      <p class="quiet">고르면 바로 오늘의 오디오가 준비됩니다. 노트와 PDF는 이 기기에만 남습니다.</p>
     </div>
-    <p class="quiet">출퇴근 10분, 시험 전 5분, 영어 표현처럼 상황만 고르면 됩니다. 개인 자료는 서버로 보내지 않습니다.</p>
+    <aside class="preview-card" aria-hidden="true">
+      <p class="eyebrow">예시 · 5분</p>
+      <h2>출근 라디오</h2>
+      <p>관심 주제를 짧게 듣고, 이어서 영어 문장 하나를 따라 말합니다. 실제 주제는 그날의 관심사로 바뀝니다.</p>
+      <div class="preview-lines">
+        <span class="on">첫 장면은 오늘 고른 주제입니다.</span>
+        <span>핵심 문장만 짧게 듣습니다.</span>
+        <span>이어서 영어 한 줄을 따라 말합니다.</span>
+      </div>
+    </aside>
   </section>
   <section class="features">
-    <article><strong>관심사만 고르면</strong><p>테크, 경제, 과학, 시사 설명을 글과 이미지, 출처와 함께 모아 옵니다.</p></article>
-    <article><strong>상황에 맞게</strong><p>시험, 이동, 영어, 뉴스 목적과 네 가지 말투로 같은 자료도 다르게 읽습니다.</p></article>
-    <article><strong>내 노트도 방송으로</strong><p>붙여 넣은 글과 PDF를 브라우저 안에서 암기용 오디오와 카드로 바꿉니다.</p></article>
+    <article><strong>앉기 전에 재생</strong><p>주제를 고르면 설명과 이미지가 5분 또는 10분 오디오로 준비됩니다.</p></article>
+    <article><strong>같은 자료를 다시 풀기</strong><p>시험 핵심, 대화, 암기 반복처럼 들은 내용을 바로 다른 말투로 바꿉니다.</p></article>
+    <article><strong>노트는 이 기기에만</strong><p>붙여 넣은 글과 PDF는 브라우저 안에서 스크립트와 카드가 됩니다.</p></article>
   </section>
   <section class="about">
-    <h2>왜 이어런인가</h2>
-    <p class="lede">읽어야 할 것은 많은데 앉아서 볼 시간은 부족합니다. 이어런은 귀가 자유로운 시간을 학습 루틴으로 만들고, 들은 문장과 출처를 카드로 남겨 나중에 눈으로 다시 확인하게 합니다.</p>
-  </section>`;
+    <h2>오늘의 듣기가 먼저 있습니다</h2>
+    <p class="lede">관심사만 고르면 출근용 라디오와 영어 문장이 준비됩니다. 시험 노트는 같은 화면에서 강의나 암기로 바뀌고, 들은 문장과 출처는 카드로 남습니다.</p>
+  </section>
+  <footer class="site-foot"><a href="./earun-brief.pdf">서비스 소개</a></footer>`;
 }
 
 function viewSetup() {
   const draft = state.draft || blankDraft();
   const steps = [
-    ["뭐라고 부를까요?", "오디오 첫 문장에 이름을 넣습니다. 비워 두면 게스트로 시작합니다."],
-    ["무엇을 들을까요?", "관심사를 고르면 공개된 설명과 이미지를 모아 옵니다. 영어는 따라 하는 표현으로 만듭니다."],
-    ["어떤 상황인가요?", "목적과 말투, 난이도, 분량에 맞춰 같은 자료도 다르게 읽습니다."],
-    ["언제 들을까요?", "정한 시각부터 40분 사이에 열면 오늘의 듣기를 안내합니다. 알림은 이 브라우저에서만 옵니다."],
+    ["이름은 건너뛰어도 됩니다", "비워 두면 게스트로 듣기를 시작합니다. 첫 문장에만 쓰입니다."],
+    ["오늘 들을 주제를 고르세요", "관심사를 고르면 공개된 설명과 이미지를 모아 옵니다. 영어는 따라 하는 표현으로 만듭니다."],
+    ["상황과 길이를 정하세요", "출근, 시험, 영어처럼 목적에 맞춰 같은 자료도 다르게 읽습니다."],
+    ["내일부터 같은 시간에", "정한 시각부터 40분 사이에 열면 오늘의 듣기를 안내합니다. 알림은 이 브라우저에서만 옵니다."],
   ];
   const [title, body] = steps[draft.step];
   let fields = "";
@@ -286,7 +304,7 @@ function viewSetup() {
     ${fields}
     <div class="cta">
       <button type="button" class="btn ghost" data-action="wizard-back">이전</button>
-      <button type="button" class="btn primary" data-action="wizard-next">${draft.step === 3 ? "첫 오디오 만들기" : "다음"}</button>
+      <button type="button" class="btn primary" data-action="wizard-next">${draft.step === 0 ? "주제 고르기" : draft.step === 3 ? "첫 오디오 만들기" : "다음"}</button>
     </div>
   </section>`;
 }
@@ -318,10 +336,10 @@ function emptyToday() {
   return `<article class="hero-card empty">
     <p class="eyebrow">오늘의 이어런</p>
     <h2>아직 오늘의 오디오가 없습니다</h2>
-    <p class="lede">관심사를 고르면 설명과 이미지를 모아 듣고, 노트는 직접 올릴 수 있습니다.</p>
+    <p class="lede">관심사를 고르면 오늘의 오디오가 준비됩니다. 시험 노트는 직접 올릴 수 있습니다.</p>
     <div class="cta">
-      <button type="button" class="btn primary" data-action="generate">관심사로 만들기</button>
-      <button type="button" class="btn ghost" data-action="nav" data-view="create">노트 · PDF로 만들기</button>
+      <button type="button" class="btn primary" data-action="generate">오늘의 오디오 만들기</button>
+      <button type="button" class="btn ghost" data-action="nav" data-view="create">내 노트로 만들기</button>
     </div>
   </article>`;
 }
@@ -344,7 +362,7 @@ function featuredCard(card) {
 
 function viewPlayer() {
   if (state.loading) {
-    return `<section class="panel"><p class="eyebrow">이어런</p><h2>듣기 좋은 말로 다시 배열하는 중</h2><p class="lede">글과 이미지를 모아, 고른 상황과 말투의 스크립트로 만들고 있습니다.</p><div class="skel"></div></section>`;
+    return `<section class="panel"><p class="eyebrow">이어런</p><h2>${esc(loadingCopy())}</h2><p class="lede">글과 이미지를 모으고 있습니다. 준비되면 듣기 시작을 누르면 재생됩니다.</p><div class="skel"></div></section>`;
   }
   if (state.error) {
     return `<section class="panel"><h2>만들지 못했습니다</h2><p class="lede">${esc(state.error)}</p><div class="cta"><button type="button" class="btn primary" data-action="dismiss-error">돌아가기</button></div></section>`;
@@ -362,10 +380,15 @@ function viewPlayer() {
         <p class="dek">${esc(episode.dek)}</p>
         ${termHtml(episode.terms)}
         <div class="transport">
-          <button type="button" class="btn play" data-action="toggle">${state.playing ? "일시정지" : "재생"}</button>
+          <button type="button" class="btn play" data-action="toggle">${playLabel()}</button>
           <button type="button" class="btn ghost" data-action="restart">처음부터</button>
           <div class="wave ${state.playing ? "is-on" : ""}" aria-hidden="true">${"<i></i>".repeat(12)}</div>
         </div>
+        <h3 class="label">이렇게 다시 만들기</h3>
+        <div class="choices">
+          ${FEEDBACKS.map(([id, label]) => `<button type="button" class="chip" data-action="feedback" data-feedback="${id}"><b>${label}</b></button>`).join("")}
+        </div>
+        <p class="quiet">같은 자료를 다시 풀어 새 카드로 남깁니다.</p>
         <button type="button" class="scrub" data-action="scrub" aria-label="재생 위치"><span style="width:${width}%"></span></button>
         <div class="rates">
           ${rateButton(0.85, "느리게")}
@@ -373,7 +396,7 @@ function viewPlayer() {
           ${rateButton(1.15, "빠르게")}
           ${rateButton(1.35, "더 빠르게")}
         </div>
-        <p class="quiet"><span id="count">${Math.min(total, state.lineIndex + 1)} / ${total}</span> · <span id="voice">${esc(state.voiceLabel)}</span></p>
+        <p class="quiet"><span id="count">${Math.min(total, state.lineIndex + 1)} / ${total}</span> · <span id="voice">${esc(voiceCaption())}</span></p>
         <p class="quiet">스페이스바로 재생과 멈춤. 문장을 누르면 그 위치부터 읽습니다.</p>
       </div>
       <div>
@@ -382,10 +405,6 @@ function viewPlayer() {
         </div>
         <div class="script" id="script">
           ${episode.lines.map((line, index) => `<div class="line" data-i="${index}"><button type="button" data-action="jump" data-i="${index}"><span class="who">${esc(line.speaker)}</span><span class="say">${esc(line.text)}</span>${line.origin && line.origin !== line.text ? `<span class="origin">${esc(line.origin)}</span>` : ""}</button></div>`).join("")}
-        </div>
-        <h3 class="label">이렇게 다시 만들기</h3>
-        <div class="choices">
-          ${FEEDBACKS.map(([id, label]) => `<button type="button" class="chip" data-action="feedback" data-feedback="${id}"><b>${label}</b></button>`).join("")}
         </div>
         ${factHtml(episode.facts)}
         <h3 class="label">출처와 이미지</h3>
@@ -427,13 +446,13 @@ function viewCreate() {
           <p class="quiet">${studio.parsing ? "PDF에서 문장을 읽는 중입니다." : studio.note ? `${studio.note.length.toLocaleString("ko-KR")}자` : "스캔본 PDF는 문장이 없을 수 있습니다."}</p>`
           : `${interestButtons(studio.interests, "studio-interest")}
           <input id="studio-keyword" type="text" maxlength="40" placeholder="오늘 꼭 듣고 싶은 주제 (선택)" value="${esc(studio.keyword)}" />`}
+        <div class="cta">
+          <button type="button" class="btn primary" data-action="generate" ${state.loading ? "disabled" : ""}>${noteMode ? "이 노트로 듣기" : "이 주제로 듣기"}</button>
+        </div>
         <p class="label">목적</p>${choiceButtons(PURPOSE_OPTIONS, "purpose", studio.purpose)}
         <p class="label">말투</p>${choiceButtons(STYLE_OPTIONS, "style", studio.style)}
         <p class="label">난이도</p>${choiceButtons(LEVEL_OPTIONS, "level", studio.level)}
         <p class="label">분량</p>${minuteButtons(studio.minutes)}
-        <div class="cta">
-          <button type="button" class="btn primary" data-action="generate" ${state.loading ? "disabled" : ""}>${noteMode ? "자료로 만들기" : "관심사로 만들기"}</button>
-        </div>
       </section>
       <section>
         <article class="features" style="margin-top:0;grid-template-columns:1fr">
@@ -598,7 +617,8 @@ async function onClick(event) {
   if (state.view === "me" && action !== "reset") persist(state);
   try {
     if (action === "nav") go(el.dataset.view);
-    else if (action === "start-guest") await startGuest();
+    else if (action === "start-guest") await startGuest(el.dataset.preset);
+    else if (action === "start-note") startNote();
     else if (action === "start-setup") {
       state.draft = blankDraft();
       go("setup");
@@ -623,7 +643,11 @@ async function onClick(event) {
     else if (action === "delete-card") deleteCard(el.dataset.id);
     else if (action === "toggle") {
       if (state.playing) stopPlayback();
-      else startPlayback(Math.min(state.lineIndex, (state.episode?.lines.length || 1) - 1));
+      else {
+        const total = state.episode?.lines?.length || 1;
+        const index = state.lineIndex >= total ? 0 : state.lineIndex;
+        startPlayback(Math.min(index, total - 1));
+      }
     } else if (action === "restart") startPlayback(0);
     else if (action === "jump") startPlayback(Number(el.dataset.i));
     else if (action === "scrub") scrub(event, el);
@@ -684,8 +708,50 @@ function onKey(event) {
   else if (state.episode) startPlayback(Math.min(state.lineIndex, state.episode.lines.length - 1));
 }
 
-async function startGuest() {
+const PRESETS = {
+  preview: { purpose: "commute", style: "radio", minutes: 5, level: "intermediate", interests: ["tech", "english"] },
+  commute: { purpose: "commute", style: "radio", minutes: 10, level: "intermediate", interests: ["tech", "english"] },
+  exam: { purpose: "exam", style: "lecture", minutes: 5, level: "intermediate", interests: ["economy"] },
+  english: { purpose: "english", style: "dialogue", minutes: 5, level: "beginner", interests: ["english"] },
+};
+
+function loadingCopy() {
+  const purpose = state.profile?.purpose;
+  const minutes = Number(state.profile?.minutes) || 5;
+  if (purpose === "exam") return "시험에 쓸 문장만 추리는 중";
+  if (purpose === "english") return "오늘 쓸 영어 문장을 고르는 중";
+  if (purpose === "commute") return `출근길에 들을 ${minutes}분을 만드는 중`;
+  return "듣기 좋은 말로 다시 배열하는 중";
+}
+
+function playLabel() {
+  if (state.playing) return "일시정지";
+  const total = state.episode?.lines?.length || 0;
+  if (!total || (state.lineIndex || 0) === 0) return "듣기 시작";
+  if (state.lineIndex >= total) return "다시 듣기";
+  return "이어서 듣기";
+}
+
+function startNote() {
   state.profile = { ...DEFAULT_PROFILE, interests: [...DEFAULT_PROFILE.interests] };
+  persist(state);
+  ensureStudio();
+  state.studio.mode = "note";
+  go("create");
+}
+
+function voiceCaption() {
+  const label = state.voiceLabel || "한국어 음성";
+  return label === "기기의 음성" ? "한국어 음성" : label;
+}
+
+async function startGuest(presetId = "commute") {
+  const preset = PRESETS[presetId] || PRESETS.commute;
+  state.profile = {
+    ...DEFAULT_PROFILE,
+    ...preset,
+    interests: [...preset.interests],
+  };
   persist(state);
   await generateAndOpen();
 }
@@ -910,7 +976,7 @@ function setActiveLine(index, scroll) {
 
 function syncTransport() {
   document.querySelectorAll("[data-action=toggle]").forEach((button) => {
-    button.textContent = state.playing ? "일시정지" : "재생";
+    button.textContent = playLabel();
     button.setAttribute("aria-pressed", String(state.playing));
   });
   document.querySelector(".wave")?.classList.toggle("is-on", state.playing);

@@ -101,6 +101,44 @@ h2 { font-size: clamp(28px, 4vw, 42px); line-height: 1.32; }
 .dek { color: var(--muted); margin-top: 8px; line-height: 1.5; }
 
 .hero { max-width: 760px; padding: 18px 0 8px; }
+.stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+  gap: 28px;
+  align-items: center;
+  padding: 8px 0 4px;
+}
+.stage .hero { max-width: none; padding: 0; }
+.scenarios { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.scenarios button {
+  border: 1px solid var(--line);
+  background: var(--paper);
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-weight: 700;
+}
+.preview-card {
+  background: var(--forest);
+  color: var(--cream);
+  border-radius: 28px;
+  padding: 28px 24px;
+}
+.preview-card h2 { font-size: clamp(26px, 3vw, 34px); }
+.preview-card .lede, .preview-card p { color: #d9d0c4; }
+.preview-card .eyebrow { color: #f3b2a4; }
+.preview-lines { display: grid; gap: 8px; margin-top: 18px; }
+.preview-lines span {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(255, 253, 249, 0.08);
+  color: #efe8dc;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.preview-lines .on { background: rgba(226, 59, 22, 0.28); color: white; }
+.site-foot { margin-top: 36px; }
+.site-foot a { color: var(--muted); font-size: 13px; text-decoration: underline; text-underline-offset: 3px; }
 .cta, .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 .cta { margin-top: 26px; }
 .features, .split, .stats, .choices, .script, .sources { margin-top: 16px; }
@@ -359,10 +397,11 @@ textarea { min-height: 220px; resize: vertical; line-height: 1.65; }
 :focus-visible { outline: 2px solid var(--ember); outline-offset: 3px; }
 
 @media (max-width: 900px) {
-  .hero-card, .player-grid, .split, .features { grid-template-columns: 1fr; }
+  .hero-card, .player-grid, .split, .features, .stage { grid-template-columns: 1fr; }
   .hero-card { display: flex; flex-direction: column; }
   .hero-card .cover { order: 2; max-height: 190px; min-height: 0; }
   .player-side { position: static; }
+  .player-side .cover { order: 8; max-height: 180px; }
   .script { max-height: none; }
   .cover { aspect-ratio: 16 / 9; }
 }

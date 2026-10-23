@@ -143,6 +143,7 @@ function sourcePack(title, id, extract) {
 }
 
 let reactionCursor = 0;
+let speakMax = 140;
 
 export function seoulKey(date = new Date()) {
   return new Intl.DateTimeFormat("en-CA", {
@@ -262,6 +263,7 @@ export function streakFrom(cards, today = new Date()) {
 export function composeEpisode({ profile, sources = [], feedback }) {
   reactionCursor = 0;
   const resolved = resolveProfile(profile, feedback);
+  speakMax = resolved.style === "radio" ? 96 : 168;
   const knowledge = (sources || []).filter((source) => source && source.kind !== "english" && sentencesOf(source.extract).length);
   const hasEnglish = !resolved.noteOnly && (resolved.interests.includes("english") || resolved.purpose === "english");
   const lines = [];
@@ -275,14 +277,8 @@ export function composeEpisode({ profile, sources = [], feedback }) {
   });
 
   let englishSource = null;
-  if (hasEnglish) {
-    const built = buildEnglish(resolved, knowledge.length > 0);
-    built.lines.forEach((line) => {
-      lines.push(line);
-      if (line.kind === "en" || line.kind === "body") body.push(line);
-    });
-    englishSource = built.source;
-  }
+  const englishFirst = resolved.purpose === "english";
+  if (hasEnglish && englishFirst) englishSource = appendEnglish(lines, body, resolved, knowledge.length > 0);
 
   const budget = perSourceBudget(resolved, Math.max(1, knowledge.length + (hasEnglish ? 1 : 0)));
   const pickedBySource = [];
@@ -292,6 +288,8 @@ export function composeEpisode({ profile, sources = [], feedback }) {
     pickedBySource.push(picked);
     addSourceSection(lines, body, source, index, resolved, picked);
   });
+
+  if (hasEnglish && !englishFirst) englishSource = appendEnglish(lines, body, resolved, knowledge.length > 0);
 
   addRecap(lines, resolved, pickedBySource);
   padToTarget(lines, body, resolved);
@@ -358,13 +356,13 @@ function episodeTitle(sources, hasEnglish) {
 }
 
 function opening(profile, sources, hasEnglish) {
-  const topics = [];
-  if (hasEnglish) topics.push("영어 표현");
-  sources.slice(0, 2).forEach((source) => topics.push(source.title));
+  const topics = sources.slice(0, 2).map((source) => source.title);
+  if (hasEnglish && profile.purpose === "english") topics.unshift("영어 표현");
+  else if (hasEnglish) topics.push("짧은 영어");
   const topicText = topics.length ? topics.join(", ") : "오늘";
   const purposeLine = {
     exam: "시험 전에 정의와 핵심 문장 위주로 듣습니다.",
-    commute: "이동 중에도 끊기지 않게 장면을 짧게 나눴습니다. 화면은 보지 않아도 됩니다.",
+    commute: "장면은 짧게 나눴고, 스크립트는 옆에 남습니다.",
     english: "듣고 바로 따라 할 수 있게 짧게 겹쳐 듣습니다.",
     news: "긴 글에 들어가기 전에, 배경이 되는 설명부터 듣습니다.",
   }[profile.purpose];
@@ -470,6 +468,15 @@ function padToTarget(lines, body, profile) {
   }
 }
 
+function appendEnglish(lines, body, profile, hasSources) {
+  const built = buildEnglish(profile, hasSources);
+  built.lines.forEach((line) => {
+    lines.push(line);
+    if (line.kind === "en" || line.kind === "body") body.push(line);
+  });
+  return built.source;
+}
+
 function buildEnglish(profile, hasSources) {
   const bank = ENGLISH[profile.level] || ENGLISH.intermediate;
   const count = englishCount(profile.minutes, hasSources, profile.tight);
@@ -511,7 +518,8 @@ function englishCount(minutes, hasSources, tight) {
 }
 
 function push(lines, partial) {
-  const bits = splitSpeakable(partial.text);
+  const max = partial.lang === "en-US" ? 160 : partial.kind === "body" || partial.kind === "recap" ? speakMax : 150;
+  const bits = splitSpeakable(partial.text, max);
   let last = null;
   bits.forEach((text, index) => {
     last = {
@@ -544,12 +552,22 @@ function splitSpeakable(text, max = 180) {
     }
   });
   if (current.trim()) chunks.push(current.trim());
-  return chunks.flatMap((part) => {
-    if (part.length <= max + 30) return [part];
-    const slices = [];
-    for (let index = 0; index < part.length; index += max) slices.push(part.slice(index, index + max));
-    return slices;
-  });
+  return chunks.flatMap((part) => breakAtSpace(part, max));
+}
+
+function breakAtSpace(part, max) {
+  const text = part.trim();
+  if (text.length <= max + 24) return [text];
+  const slices = [];
+  let rest = text;
+  while (rest.length > max + 24) {
+    let cut = rest.lastIndexOf(" ", max);
+    if (cut < Math.floor(max * 0.55)) cut = max;
+    slices.push(rest.slice(0, cut).trim());
+    rest = rest.slice(cut).trim();
+  }
+  if (rest) slices.push(rest);
+  return slices.filter(Boolean);
 }
 
 function pickSentences(list, count) {
