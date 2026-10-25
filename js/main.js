@@ -67,9 +67,9 @@ function esc(value) {
 }
 
 function mark(onDark = false) {
-  const bg = onDark ? "#f4efe6" : "#1c4639";
-  const stroke = onDark ? "#1c4639" : "#f4efe6";
-  return `<svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="${bg}"/><path d="M10 20c2.2 0 3.4-2.2 3.4-8S12.2 4 10 4" fill="none" stroke="${stroke}" stroke-width="1.8" stroke-linecap="round"/><path d="M14.2 23c3.6 0 6-3.6 6-11s-2.4-11-6-11" fill="none" stroke="${stroke}" stroke-width="1.8" stroke-linecap="round"/><circle cx="9.2" cy="20" r="1.4" fill="#e23b16"/></svg>`;
+  const bg = "#2563eb";
+  const stroke = "#ffffff";
+  return `<svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="${bg}"/><path d="M10 20c2.2 0 3.4-2.2 3.4-8S12.2 4 10 4" fill="none" stroke="${stroke}" stroke-width="1.8" stroke-linecap="round"/><path d="M14.2 23c3.6 0 6-3.6 6-11s-2.4-11-6-11" fill="none" stroke="${stroke}" stroke-width="1.8" stroke-linecap="round"/><circle cx="9.2" cy="20" r="1.4" fill="#ffffff"/></svg>`;
 }
 
 function brand(clickable, onDark = false) {
@@ -179,7 +179,7 @@ function shell(bare) {
 function sideHtml() {
   const profile = state.profile;
   return `<aside class="side">
-    ${brand(true, true)}
+    ${brand(true)}
     <nav>
       ${navButton("today", "오늘")}
       ${navButton("create", "만들기")}
