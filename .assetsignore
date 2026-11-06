@@ -1,0 +1,9 @@
+.git
+.wrangler
+node_modules
+brief.html
+package.json
+package-lock.json
+wrangler.jsonc
+.assetsignore
+.gitignore
